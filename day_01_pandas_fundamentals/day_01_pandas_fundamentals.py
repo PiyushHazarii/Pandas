@@ -136,14 +136,30 @@ def indexing_and_selection() -> None:
     print_section("1.3 Indexing & Selection")
     df = make_people_dataframe()
 
+    # it will return the row with label 0, which is the first row of the data frame.
     show("df.loc[0] - row with label 0", df.loc[0])
+
+    # it will return the rows with labels 0, 1, and 2, which are the first three rows of the data frame.
+    # it will include the upper bound, so it will include the row with label 2.
     show("df.loc[0:2] - label slice includes 2", df.loc[0:2])
+
+    # it will return the cell at the intersection of row with label 0 and column with label "name".
     show("df.loc[0, 'name'] - single cell by label", df.loc[0, "name"])
+
+    # it will return the rows with labels 0, 1, and 2, and the columns with labels "name" and "score".
     show("df.loc[0:2, 'name':'score']", df.loc[0:2, "name":"score"])
 
+    # it will return the first row of the data frame, which is the row at position 0.
     show("df.iloc[0] - first row by position", df.iloc[0])
+
+    # it will return the rows at positions 0 and 1, which are the first two rows of the data frame.
+    # it will exclude the upper bound, so it will not include the row at position 2.
     show("df.iloc[0:2] - position slice excludes 2", df.iloc[0:2])
+
+    # it will return the cell at the intersection of row at position 0 and column at position 1.
     show("df.iloc[0, 1] - row 0, column 1", df.iloc[0, 1])
+
+    # it will return the rows at positions 0 and 1, and the columns at positions 1 and 2.
     show("df.iloc[:, 1:3] - all rows, columns 1 and 2", df.iloc[:, 1:3])
 
     show("Rows where age > 28", df[df["age"] > 28])
@@ -153,9 +169,16 @@ def indexing_and_selection() -> None:
     )
     show("query() syntax", df.query('age > 28 and city == "Delhi"'))
 
+    # it will return the column with label "name", which is a Series.
     show("df['name'] returns a Series", df["name"])
+
+    # it will return a DataFrame with the columns "name" and "score", which is a DataFrame.
     show("df[['name', 'score']] returns a DataFrame", df[["name", "score"]])
+
+    # it will return the cell at the intersection of row with label 2 and column with label "score".
     show("df.at[2, 'score'] - fast scalar by label", df.at[2, "score"])
+
+    # it will return the cell at the intersection of row at position 2 and column at position 2.
     show("df.iat[2, 2] - fast scalar by position", df.iat[2, 2])
 
 
@@ -163,6 +186,20 @@ def modifying_dataframes() -> None:
     print_section("1.4 Modifying DataFrames")
     df = make_people_dataframe()
 
+    # this is also the way to add a new column to the data frame,
+    # by assigning a list of values to a new column label.
+    df["new_column"] = [12,32,12,45]
+    print("\n--- Add a new column ---")
+    print(df)
+
+    # this is another way to add a new column to the data frame,
+    # by using the assign() method, which returns a new data frame with the new column
+    df = df.assign(new_column2=[1, 2, 3, 4])
+    print("\n--- Add a new column with assign() ---")
+    print(df)
+
+    # this is a way to add a new column based on the values of an existing column,
+    # by using the apply() method, which applies a function to each value in the column
     df["grade"] = df["score"].apply(lambda x: "A" if x >= 90 else "B")
     show("Add a grade column", df)
 
@@ -175,12 +212,18 @@ def modifying_dataframes() -> None:
     without_first_two = df.drop(index=[0, 1])
     show("Drop rows by label", without_first_two)
 
+
+    # this is a way to reset the index of the data frame after dropping rows,
+    # by using the reset_index() method, which returns a new data frame with a new index and the old index as a column.
     reset = without_first_two.reset_index(drop=True)
     show("Reset index after dropping rows", reset)
 
     indexed = df.set_index("name")
     show("Set name as index", indexed)
     show("Sort by age descending", df.sort_values("age", ascending=False))
+
+    # this is a way to sort the data frame by the index labels,
+    # by using the sort_index() method, which returns a new data frame sorted by the index labels in ascending order by default.
     show("Sort by row labels", indexed.sort_index())
 
     assigned = df.assign(
