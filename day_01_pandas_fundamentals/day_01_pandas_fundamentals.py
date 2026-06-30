@@ -98,19 +98,37 @@ def dataframe_basics() -> None:
         columns=["X", "Y", "Z"],
     )
 
+    # data frames are 2-dimensional labeled data structures with columns of potentially different types.
+    # You can think of it like a spreadsheet or SQL table, or a dict of Series objects.
     show("DataFrame from dict of lists", df)
     show("DataFrame from list of dicts", df2)
     show("DataFrame from NumPy array", df3)
+
+    # you can create a data frame from the dictionary and list of lists, 
+    # and you can also create a data frame from a list of dictionaries.
 
     show("df.shape", df.shape)
     show("df.dtypes", df.dtypes)
     show("df.columns", df.columns)
     show("df.index", df.index)
+
     print("\n--- df.info() ---")
+
+    # it will print a concise summary of the data frame, including the number of non-null values, 
+    # the data types of each column, and the memory usage.
     df.info()
+
+    # it will return a summary of the data frame, including the number of non-null values, 
+    # the data types of each column, and the memory usage.
     show("df.describe()", df.describe())
+
+    # it will return the first n rows of the data frame, where n is 5 by default.
     show("df.head(2)", df.head(2))
+
+    # it will return the last n rows of the data frame, where n is 5 by default.
     show("df.tail(2)", df.tail(2))
+
+    # it will return a random sample of n rows from the data frame, where n is 1 by default.
     show("df.sample(2, random_state=1)", df.sample(2, random_state=1))
 
 
