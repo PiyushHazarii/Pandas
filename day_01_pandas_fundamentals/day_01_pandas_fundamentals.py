@@ -40,9 +40,16 @@ def make_people_dataframe() -> pd.DataFrame:
 def series_basics() -> None:
     print_section("1.1 Series - The 1-D Building Block")
 
-    s1 = pd.Series([10, 20, 30, 40])
+    # series with default integer index and it can be displayed as a table with index and values
+    s1 = pd.Series([10, 20, 30, 40]) 
+
+    # if i should mention the index, i can pass a list of index values to the index parameter
     s2 = pd.Series([10, 20, 30], index=["a", "b", "c"])
+
+    # if i want to create a series from a dictionary, i can pass the dictionary to the Series constructor
     s3 = pd.Series({"x": 100, "y": 200})
+
+    # if i want to create a series with a scalar value, i can pass the scalar value and the index to the Series constructor
     s4 = pd.Series(5, index=range(4))
 
     show("Series from list with default index", s1)
@@ -58,12 +65,23 @@ def series_basics() -> None:
     s2.name = "score"
     show("s2.name after setting", s2.name)
 
+    # loc is label-based indexing, iloc is position-based indexing
+    # means s2.loc["b"] will return the value at index "b"
     show("Label-based access with .loc['b']", s2.loc["b"])
+
+    # s2.iloc[1] will return the value at position 1
     show("Position-based access with .iloc[1]", s2.iloc[1])
+
+    # fancy indexing with a list of labels will return a Series with those labels and their corresponding values
     show("Fancy indexing with labels ['a', 'c']", s2.loc[["a", "c"]])
 
+    # vectorized operations means it just multiplies each value in the series by 2 and returns a new series
     show("Vectorized multiplication", s2 * 2)
+
+    # it will return a booleans series.
     show("Boolean mask", s2 > 15)
+
+    # it will return a series with only the values that are greater than 15
     show("Filtered Series", s2[s2 > 15])
 
     other = pd.Series([1, 2, 3], index=["b", "c", "d"])
