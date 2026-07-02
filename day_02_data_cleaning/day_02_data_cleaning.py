@@ -50,22 +50,50 @@ def missing_values() -> None:
     df = make_messy_dataframe()
     show("Raw messy data", df)
 
+    # this will show True for missing values and False for np.nan, None, and NaT values.
     show("df.isna()", df.isna())
+
+    # count of np.nan, None, and NaT values per column.
     show("Missing count per column", df.isna().sum())
+
+    # percentage of missing values per column, rounded to 2 decimal places.
     show("Missing percent per column", (df.isna().sum() / len(df) * 100).round(2))
+
+    # this will show True for non-missing values and False for np.nan, None, and NaT values.
     show("df.notna()", df.notna())
 
+    # this df.dropna() will drop any row that has at least one missing value in any column.
+    # means np.nan, None, and NaT values rows will be dropped.
     show("Drop rows with any missing value", df.dropna())
+
     show("Drop rows where all values are missing", df.dropna(how="all"))
+
+    # this df.dropna(subset=["age", "score"]) will drop any row that has a missing value
+    # in either the "age" or "score" column.
     show("Drop rows only when age or score is missing", df.dropna(subset=["age", "score"]))
+
+    # this df.dropna(axis=1) will drop any column that has at least one missing value in any row.
     show("Drop columns with any missing value", df.dropna(axis=1))
+
+    # this df.dropna(thresh=4) will keep only those rows that have at least 4 non-missing values.
+    # means np.nan, None, and NaT values will be counted as missing.
     show("Keep rows with at least 4 non-missing values", df.dropna(thresh=4))
 
+
+    # this will fill missing values in the "age" column with "0", in the "score" column with the median score, and in the "city" column with "Unknown".
     filled = df.fillna({"age": "0", "score": df["score"].median(), "city": "Unknown"})
     show("Fill selected columns with useful defaults", filled)
 
+    # this forward fill will fill all missing values in the DataFrame with the last valid value
+    # in the same column.
     show("Forward fill", df.ffill())
+
+    # this df.bfill() will fill all missing values in the DataFrame with the next valid value
+    # in the same column.
     show("Backward fill", df.bfill())
+
+    # this will fill missing values in the DataFrame with the last valid value in the same column,
+    # but only for at most 2 consecutive missing values.
     show("Forward fill at most 2 consecutive missing values", df.ffill(limit=2))
 
     show("Linear interpolation on score", df["score"].interpolate(method="linear"))
